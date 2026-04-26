@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', 'Samsung Sans', 'Noto Sans KR', sans-serif;
+}
+
+:root {
+    --primary: #0B3D91;      /* Samsung Blue */
+    --accent: #0ABAB5;       /* Tiffany */
+    --wine: #C41E3A;         /* Bright Wine Accent */
+    --bg: #0A0F1C;
+    --card: rgba(255, 255, 255, 0.05);
+    --glass: rgba(255, 255, 255, 0.06);
+    
+    /* Shadcn Overrides for Dark Mode by default */
+    --background: #0A0F1C;
+    --foreground: #ffffff;
+    --radius: 1rem;
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+@layer base {
+  * {
+    @apply border-white/5 outline-none;
+  }
+  body {
+    @apply bg-[#0a0f1c] text-white antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 30px 60px rgba(11, 61, 145, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+      rgba(10, 186, 181, 0.15), 
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .glass-card:hover::after {
+    opacity: 1;
+  }
+
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-magnetic {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-magnetic:hover {
+    transform: scale(1.08);
+  }
+
+  .btn-magnetic:active {
+    transform: scale(0.95);
+  }
+
+  .btn-wine {
+    background: var(--wine);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+
+  .btn-wine:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+    box-shadow: 0 0 20px rgba(196, 30, 58, 0.4);
+  }
+
+  .privacy-blur {
+    backdrop-filter: blur(40px);
+    background: rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Leaflet Fixes */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #0a0f1c !important;
+}
+
+.leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
