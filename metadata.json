@@ -1,0 +1,7 @@
+{
+  "name": "한번 사는 인생 유흥업소 0412",
+  "description": "밤생활.유흥 종사자 전용 커뮤니티",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

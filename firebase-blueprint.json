@@ -1,0 +1,84 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "A community post with location and media",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "category": { "type": "string", "enum": ["jobs", "realestate", "market", "drink", "promo", "food"] },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "video": { "type": "string" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "address": { "type": "string" },
+        "likes": { "type": "number" },
+        "dislikes": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "category", "title", "content", "lat", "lng", "address", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "A message in a chat room",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "roomId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["text", "image", "voice"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "roomId", "senderId", "message", "type", "createdAt"]
+    },
+    "ChatRoom": {
+      "title": "ChatRoom",
+      "description": "A chat room between two users",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userA": { "type": "string" },
+        "userB": { "type": "string" },
+        "lastMessage": { "type": "string" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["id", "userA", "userB", "updatedAt"]
+    },
+    "Reaction": {
+      "title": "Reaction",
+      "description": "A like or dislike on a post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "postId": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["like", "dislike"] },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "postId", "userId", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Public community posts"
+    },
+    "/rooms/{roomId}": {
+      "schema": "ChatRoom",
+      "description": "Chat rooms"
+    },
+    "/rooms/{roomId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages within a chat room"
+    },
+    "/reactions/{reactionId}": {
+      "schema": "Reaction",
+      "description": "Post reactions"
+    }
+  }
+}
